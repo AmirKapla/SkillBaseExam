@@ -1,0 +1,28 @@
+import socket
+def convert_to_atmosphere(pressure_bar):
+    # Conversion formula from bar to atmosphere
+    return pressure_bar * 0.986923
+
+def server_program():
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_address = ('192.168.119.128', 12345)
+    server_socket.bind(server_address)
+    server_socket.listen(5)
+
+    print("Server is listening for incoming connections...")
+    while True:
+        client_socket, client_address = server_socket.accept()
+        try:
+            print("Connection established with:", client_address)
+            data = client_socket.recv(1024)
+            pressure_bar = float(data.decode())
+            atmosphere = convert_to_atmosphere(pressure_bar)
+            client_socket.send(str(atmosphere).encode())
+            print(f"Sent atmosphere-standard value: {atmosphere:.4f}")
+
+        finally:
+            client_socket.close()
+
+if __name__ == "__main__":
+    server_program()
+
