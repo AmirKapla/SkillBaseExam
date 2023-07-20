@@ -1,0 +1,37 @@
+import socket
+import threading
+import random
+
+quotes = [
+    "Make a mistake but keep in mind,it's creativity - Daim",
+    "Born from a child to man - Amir",
+    "You can change what you do,but you can't change what you want - Thomas Shelby",
+    "Bukan kesulitan yang membuat kita takut,tapi ketakutan yang membuat kita sulit - Ali bin Abi Thalib",
+    "Yesterday was history,tomorrow is mystery,Today IS A GIFT.That's why it's called the PRESENT - Master Oogway",
+    "A smile is the easiest lie of all - Khairul Ikhwan"
+]
+
+def get_random_quote():
+    return random.choice(quotes)
+
+def handle_client(client_socket):
+    quote = get_random_quote()
+    client_socket.send(quote.encode())
+    client_socket.close()
+
+def start_server():
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_address = ('192.168.119.128', 8888)
+    server_socket.bind(server_address)
+
+    server_socket.listen(5)
+    print("Server is listening for incoming connections...")
+
+    while True:
+        client_socket, client_address = server_socket.accept()
+        print(f"Connection established with: {client_address}")
+        client_thread = threading.Thread(target=handle_client, args=(client_sock>
+        client_thread.start()
+
+if __name__ == "__main__":
+    start_server()
