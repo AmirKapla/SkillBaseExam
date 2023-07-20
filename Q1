@@ -1,0 +1,26 @@
+//Question 1 – Client Socket
+Answer
+import socket
+
+def send_student_id_to_server(student_id):
+    host = "izani.synology.me"
+    port = 8443
+
+    try:
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.connect((host, port))
+        client_socket.sendall(student_id.encode())
+
+        response = client_socket.recv(1024).decode()
+        print("Server response:", response)
+
+    except ConnectionRefusedError:
+        print("Connection refused. Please check the server details and try again.>
+    except Exception as e:
+        print("An error occurred:", str(e))
+    finally:
+        client_socket.close()
+
+if __name__ == "__main__":
+    student_id = "2022868828"
+    send_student_id_to_server(student_id)
