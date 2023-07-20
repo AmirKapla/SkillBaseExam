@@ -1,6 +1,5 @@
 import socket
 def convert_to_atmosphere(pressure_bar):
-    # Conversion formula from bar to atmosphere
     return pressure_bar * 0.986923
 
 def server_program():
